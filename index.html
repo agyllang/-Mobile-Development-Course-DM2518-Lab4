@@ -73,11 +73,10 @@
 
       }
 
-    </script>
-    <script>
-    function givePermission() {
-    // feature detect
 
+
+      function givePermission() {
+    // feature detect
     if (typeof DeviceOrientationEvent.requestPermission === 'function') {
       DeviceOrientationEvent.requestPermission()
         .then(permissionState => {
@@ -88,16 +87,14 @@
         .catch(console.error);
     } else {
       // handle regular non iOS 13+ devices
-      document.getElementById("heading").innerHTML = "device orientation permission was not requested";
 
     }
   }
+
   function handleOrientation(event)
   {
     var heading = event.alpha;
-    console.log("heading:",heading)
-  
-    // some browsers don't understand "alpha"
+
     if (typeof event.webkitCompassHeading !== "undefined") {
        heading = event.webkitCompassHeading;
      }
@@ -105,8 +102,11 @@
     document.getElementById("heading").innerHTML = heading.toFixed([0]);
   }
   
-
-
-</script>
+    </script>
+   
   </body>
 </html>
+
+
+
+
