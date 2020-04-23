@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
-    <input type="button" value="Ok to see orientation" onclick="givePermission()" />
+    <input type="button" value="Ok to see orientation" onclick="givePermission();" />
 
     <p id="heading">n/aa</p>
     <div id="chat-container"></div>
@@ -74,9 +74,8 @@
       }
 </script>
 <script>
-
-
-      function givePermission() {
+     
+  function givePermission() {
     // feature detect
     if (typeof DeviceOrientationEvent.requestPermission === 'function') {
       DeviceOrientationEvent.requestPermission()
@@ -102,6 +101,9 @@
 
     document.getElementById("heading").innerHTML = heading.toFixed([0]);
   }
+  
+
+
   
     </script>
    
