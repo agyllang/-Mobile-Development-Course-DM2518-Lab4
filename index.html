@@ -3,36 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript" src="index.js"></script>
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
 
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script>
-
-    <!-- Instantiate PubNub -->
-    <script type="text/javascript">
-      var pubnubDemo = new PubNub({
-        publishKey: "sub-c-2125d34a-8534-11ea-885f-2621b2dc68c7",
-        subscribeKey: "sub-c-4c36e870-8535-11ea-a961-f6bfeb2ef611",
-      });
-
-      // Publish a simple message to the “demo_tutorial” channel pubnub:
-      pubnubDemo.publish({
-        message: { color: "blue" },
-        channel: "demo_tutorial",
-      });
-
-      // Subscribe to the demo_tutorial channel pubnub
-
-      pubnubDemo.addListener({
-        message: function (message) {
-          console.log(message);
-        },
-      });
-
-      pubnubDemo.subscribe({
-        channels: ["demo_tutorial"],
-      });
-    </script>
   </body>
 </html>
