@@ -6,9 +6,16 @@
     <!-- <script type="text/javascript" src="index.js"></script> -->
     <!-- <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script> -->
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.27.4.min.js"></script>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
+    <input type="button" value="Ok to see orientation" onclick="givePermission()" />
+
+    <p id="heading">n/aa</p>
+    <div id="chat-container"></div>
+    <input type="text" id="chat-input" placeholder="  Your message.."></input>
+    <button class="chat-button" onclick="getInput()">Send</button>
     <script>
       var pubnubDemo = new PubNub({
         publishKey: "pub-c-2320022b-a663-436b-a99d-5923971c47de",
@@ -17,22 +24,89 @@
       console.log("pubnub", pubnubDemo);
 
       // Publish a simple message to the “demo_tutorial” channel pubnub:
-      pubnubDemo.publish({
-        message: { color: "blue" },
-        channel: "demo_tutorial",
-      });
+    //   pubnubDemo.publish({
+    //     message: { color: "blue" },
+    //     channel: "demo_tutorial",
+    //   });
+
 
       // Subscribe to the demo_tutorial channel pubnub
 
       pubnubDemo.addListener({
-        message: function (message) {
-          console.log(message);
+        message: function (fetchData) {
+          console.log("message data from demo_tutorial:", fetchData);
+          var sentMessage= fetchData.message.message;
+          
+        var chat_container = document.getElementById('chat-container');
+        var node = document.createElement("div");  
+        node.classList.add("chat-message");
+
+        var textnode = document.createTextNode(sentMessage);
+        console.log("textnode",textnode)
+        node.appendChild(textnode);
+        document.getElementById("chat-container").appendChild(node); 
+
+        //   var newMessage = document.createTextNode({sentMessage}); 
+            // console.log("newMessage",newMessage)
+
+          
+        //   chat_container.appendChild(newMessage);
+            // chat_container.innerHTML += sentMessage;
+
         },
       });
 
       pubnubDemo.subscribe({
         channels: ["demo_tutorial"],
       });
+
+      function getInput(){
+        var input_element = document.getElementById("chat-input");
+        var message = input_element.value;
+        if (message.length> 0 ){
+        pubnubDemo.publish({
+        message: {message},
+        channel: "demo_tutorial",
+      });
+    }
+      input_element.value =null;
+
+      }
+
     </script>
+    <script>
+    function givePermission() {
+    // feature detect
+
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation, true);
+          }
+        })
+        .catch(console.error);
+    } else {
+      // handle regular non iOS 13+ devices
+      document.getElementById("heading").innerHTML = "device orientation permission was not requested";
+
+    }
+  }
+  function handleOrientation(event)
+  {
+    var heading = event.alpha;
+    console.log("heading:",heading)
+  
+    // some browsers don't understand "alpha"
+    if (typeof event.webkitCompassHeading !== "undefined") {
+       heading = event.webkitCompassHeading;
+     }
+
+    document.getElementById("heading").innerHTML = heading.toFixed([0]);
+  }
+  
+
+
+</script>
   </body>
 </html>
