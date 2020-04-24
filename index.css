@@ -118,7 +118,7 @@ body {
 .compass {
   background: rgba(80, 204, 190, 0.3);
   width: 20vw;
-  border: 2px solid black;
+  /* border: 2px solid black; */
   display: grid;
   border-radius: 3px;
   /* grid-template-columns: 1fr; */
