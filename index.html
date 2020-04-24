@@ -3,9 +3,73 @@
     <title>orientation</title>
   </head>
   <body>
-    <h1>Hello, hi</h1>
+    <h1>DM2518Lab 4</h1>
+    <input
+      type="button"
+      value="Ok to see orientation"
+      onclick="givePermission();"
+    />
 
+    <p id="heading">n/a</p>
+    <div id="chat-container"></div>
+    <input type="text" id="chat-input" placeholder="  Your message.."></input>
+    <button class="chat-button" onclick="getInput()">Send</button>
     <script>
+      var pubnubDemo = new PubNub({
+        publishKey: "pub-c-2320022b-a663-436b-a99d-5923971c47de",
+        subscribeKey: "sub-c-4c36e870-8535-11ea-a961-f6bfeb2ef611",
+      });
+      console.log("pubnub", pubnubDemo);
+
+      // Publish a simple message to the “demo_tutorial” channel pubnub:
+    //   pubnubDemo.publish({
+    //     message: { color: "blue" },
+    //     channel: "demo_tutorial",
+    //   });
+
+
+      // Subscribe to the demo_tutorial channel pubnub
+
+      pubnubDemo.addListener({
+        message: function (fetchData) {
+          console.log("message data from demo_tutorial:", fetchData);
+          var sentMessage= fetchData.message.message;
+          
+        var chat_container = document.getElementById('chat-container');
+        var node = document.createElement("div");  
+        node.classList.add("chat-message");
+
+        var textnode = document.createTextNode(sentMessage);
+        console.log("textnode",textnode)
+        node.appendChild(textnode);
+        document.getElementById("chat-container").appendChild(node); 
+
+        //   var newMessage = document.createTextNode({sentMessage}); 
+            // console.log("newMessage",newMessage)
+
+          
+        //   chat_container.appendChild(newMessage);
+            // chat_container.innerHTML += sentMessage;
+
+        },
+      });
+
+      pubnubDemo.subscribe({
+        channels: ["demo_tutorial"],
+      });
+
+      function getInput(){
+        var input_element = document.getElementById("chat-input");
+        var message = input_element.value;
+        if (message.length> 0 ){
+        pubnubDemo.publish({
+        message: {message},
+        channel: "demo_tutorial",
+      });
+    }
+      input_element.value =null;
+
+      }
       function givePermission() {
         // feature detect
         if (typeof DeviceOrientationEvent.requestPermission === "function") {
@@ -37,12 +101,6 @@
       }
     </script>
 
-    <input
-      type="button"
-      value="Ok to see orientation"
-      onClick="givePermission();"
-    />
-
-    <p id="heading">n/a</p>
+    
   </body>
 </html>
