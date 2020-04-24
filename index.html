@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
-    <h3>test10</h3>
+    <h3>test11</h3>
     <input
       type="button"
       value="Ok to see orientation"
@@ -70,13 +70,7 @@
       });
 
       function getInput(){
-        if (deviceAngle > 180){
-          window.alert("deviceAngle > 180")
-        } else if (deviceAngle < 180){
-          window.alert("deviceAngle < 180")
-
-        }
-
+        window.alert({deviceAngle});
 
         var input_element = document.getElementById("chat-input");
         var message = input_element.value;
