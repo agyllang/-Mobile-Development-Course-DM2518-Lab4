@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
-    <h3>test1</h3>
+    <h3>test2</h3>
     <input
       type="button"
       value="Ok to see orientation"
@@ -105,24 +105,27 @@
         }
 
           //North scenario
-        if (361>heading.toFixed([0])>315 || 45>heading.toFixed([0])>0 ){
+        if ((360>heading.toFixed([0])>315) || (45>heading.toFixed([0])>0) ){
           document.getElementById("direction").innerHTML = "North"
+          window.alert("North");
 
         }
          //East scenario
          if (135>heading.toFixed([0])>45 ){
           document.getElementById("direction").innerHTML = "East"
+          window.alert("East");
 
         } //West scenario
         if (315>heading.toFixed([0])>225 ){
           document.getElementById("direction").innerHTML = "West"
+          window.alert("West");
 
         }
 
         //South scenario
         if (225>heading.toFixed([0])>135 ){
           document.getElementById("direction").innerHTML = "South"
-
+          window.alert("South");
         }
       
 
