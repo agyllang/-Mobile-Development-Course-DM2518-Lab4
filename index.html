@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
-    <h3>test5</h3>
+    <h3>test6</h3>
     <input
       type="button"
       value="Ok to see orientation"
@@ -104,11 +104,11 @@
           heading = event.webkitCompassHeading;
         }
 
-          //North scenario
-        if ((360>heading.toFixed([0])>315) || (45>heading.toFixed([0])>0) ){
-          document.getElementById("direction").innerHTML = "North"
-          return
-        }
+        //   //North scenario
+        // if ((360>heading.toFixed([0])>315) || (45>heading.toFixed([0])>0) ){
+        //   document.getElementById("direction").innerHTML = "North"
+        //   return
+        // }
 
          //East scenario
          if (135>heading.toFixed([0])>45 ){
