@@ -10,89 +10,160 @@
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
-    <h3>test15</h3>
+    <h3>test16</h3>
     <input
       type="button"
       value="Ok to see orientation"
       onclick="givePermission();"
     />
-    <p id="heading">n/a</p>
+    <input id="input-angle" />
+    <button onclick="changeAngle()">change angle</button>
 
+    <p id="heading">n/a</p>
+    <h4 id="direction-header">Channel</h4>
     <div id="chat-container"></div>
     <input type="text" id="chat-input" placeholder="  Your message.."></input>
-    <button class="chat-button" onclick="getInput()">Send</button>
+    <button class="chat-button" onclick="sendInput()">Send</button>
     <script>
       var pubnubDemo = new PubNub({
         publishKey: "pub-c-2320022b-a663-436b-a99d-5923971c47de",
         subscribeKey: "sub-c-4c36e870-8535-11ea-a961-f6bfeb2ef611",
       });
-      console.log("pubnub", pubnubDemo);
+      // console.log("pubnub", pubnubDemo);
+      var north_array = []
+      var south_array = []
+      var east_array = []
+      var west_array = []
 
-      var deviceAngle
-      // Publish a simple message to the “demo_tutorial” channel pubnub:
-    //   pubnubDemo.publish({
-    //     message: { color: "blue" },
-    //     channel: "demo_tutorial",
-    //   });
+      var deviceAngle = 
 
+      pubnubDemo.subscribe({
+        channels: ["north","south","west","east"],
+      });
 
-      // Subscribe to the demo_tutorial channel pubnub
+      function addToChannelArray(data){
+        if (data.channel ==="north"){
+          north_array.push(data)
+          console.log(north_array)
 
+      } else if (data.channel ==="south"){
+        south_array.push(data)
+
+      }else if (data.channel ==="east"){
+        east_array.push(data)
+
+      }else if (data.channel ==="west"){
+        west_array.push(data)
+      }
+    }
+      function matchDirectionWithArray(direction){
+        if (direction ==="north"){
+          return north_array
+
+      } else if (direction ==="south"){
+        return south_array
+
+      }else if (direction ==="east"){
+        return east_array
+
+      }else if (direction ==="west"){
+        return west_array
+      }
+
+      }
+      function createMessage(array){
+        var chat_container = document.getElementById('chat-container'); //target chat-container
+
+        chat_container.innerHTML = ""; //clears data from div
+
+      
+        array.map(messageData =>{
+          var node = document.createElement("div");  //create div-element
+          node.classList.add("chat-message"); // add css class to div-element
+
+          var textnode = document.createTextNode(messageData.message.message); //adds message to textnode
+          node.appendChild(textnode); //adds child node to div-element
+          document.getElementById("chat-container").appendChild(node); 
+
+        })
+      }
+    
+      // fetch messages
       pubnubDemo.addListener({
         message: function (fetchData) {
-          console.log("message data from demo_tutorial:", fetchData);
+          console.log("message data from:", fetchData);
           var sentMessage= fetchData.message.message;
-          
-        var chat_container = document.getElementById('chat-container');
-        var node = document.createElement("div");  
-        node.classList.add("chat-message");
+          var channelName =fetchData.message.channel;
 
-        var textnode = document.createTextNode(sentMessage);
-        console.log("textnode",textnode)
-        node.appendChild(textnode);
-        document.getElementById("chat-container").appendChild(node); 
+          addToChannelArray(fetchData)
+          createMessage(matchDirectionWithArray(getDirection(deviceAngle)));
+
+
+        // var chat_container = document.getElementById('chat-container');
+        // var node = document.createElement("div");  
+        // node.classList.add("chat-message");
+
+        // var textnode = document.createTextNode(sentMessage);
+        // console.log("textnode",textnode)
+        // node.appendChild(textnode);
+        // document.getElementById("chat-container").appendChild(node); 
 
         },
       });
+      function changeAngle(){ //used for desktop testing 
+        var input_element = document.getElementById("input-angle");
+        var angle = input_element.value;
+        deviceAngle=angle;
+        getDirection(deviceAngle)
 
-      function getDirection (deviceAngle){
+      }
+      function getDirection (deviceAngle){ // returns string with direction and changes channel title name
         //North scenario 1
         if (deviceAngle>315 ){
+          document.getElementById("direction-header").innerHTML = "North";
+
           return "north"
         }
 
           //North scenario 2
         if (deviceAngle<45) {
+          document.getElementById("direction-header").innerHTML = "North";
+
           return "north"
 
         }
 
          //East scenario
          if (deviceAngle>45 && deviceAngle<135 ){
+          document.getElementById("direction-header").innerHTML = "East";
+
           return "east"
 
         } 
         
         //West scenario
         if (deviceAngle>225 && deviceAngle<315){
+          document.getElementById("direction-header").innerHTML = "West";
+
           return "west"
 
         }
 
         //South scenario
         if (deviceAngle>135 && deviceAngle<225){
+          document.getElementById("direction-header").innerHTML = "South";
+
           return "south"
 
         }
+        if(!deviceAngle){
+          return "north"
+        }
       }
-      pubnubDemo.subscribe({
-        channels: [getDirection(deviceAngle)],
-      });
-
-      function getInput(){
-        // deviceAngle= 44;
+      
+      function sendInput(){ //sends message to corresponding channel depending on direction
         var channel = ""
-        channel = getDirection(deviceAngle)
+        channel = getDirection(deviceAngle) //returns angle.
 
         var input_element = document.getElementById("chat-input");
         var message = input_element.value;
@@ -103,8 +174,7 @@
       });
       document.getElementById("chat-input").value=null; //clears the text in input field.
 
-    }
-      
+      }
       }
       function givePermission() {
         // feature detect
@@ -134,6 +204,7 @@
         if (typeof event.webkitCompassHeading !== "undefined") {
           heading = event.webkitCompassHeading;
         }
+        createMessage(matchDirectionWithArray(getDirection(deviceAngle)));
 
        
         document.getElementById("heading").innerHTML = heading.toFixed([0]) + "°";
