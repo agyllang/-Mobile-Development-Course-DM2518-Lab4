@@ -16,6 +16,7 @@
       onclick="givePermission();"
     />
     <p id="heading">n/a</p>
+    <p id="absolutenorth">n/a</p>
     <div id="chat-container"></div>
     <input type="text" id="chat-input" placeholder="  Your message.."></input>
     <button class="chat-button" onclick="getInput()">Send</button>
@@ -100,6 +101,11 @@
 
         if (typeof event.webkitCompassHeading !== "undefined") {
           heading = event.webkitCompassHeading;
+        }
+
+        if(event.absolute === true){
+          document.getElementById("absolutenorth").innerHTML = "absolute north"
+
         }
 
         document.getElementById("heading").innerHTML = heading.toFixed([0]);
