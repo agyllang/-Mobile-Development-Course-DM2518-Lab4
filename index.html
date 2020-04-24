@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
-    <h3>test13</h3>
+    <h3>test14</h3>
     <input
       type="button"
       value="Ok to see orientation"
@@ -63,50 +63,51 @@
       });
 
       pubnubDemo.subscribe({
-        channels: ["demo_tutorial"],
+        channels: ["north"],
       });
 
       function getInput(){
- //   //North scenario
-        // if ((360>angle>315)){
-        //   document.getElementById("north").innerHTML = "north";
-          
-        // }
+        deviceAngle= 44;
+        var channel = ""
+       //North scenario 1
+        if (deviceAngle>315 ){
+          channel="north"
+        }
 
-        //   //North scenario
-        // if (45>angle>0) {
-        //   document.getElementById("north").innerHTML = "north";
-          
-        // }
+          //North scenario 2
+        if (deviceAngle<45) {
+          channel="north"
 
-        //  //East scenario
-        //  if (135>angle>45 ){
-        //   document.getElementById("east").innerHTML = "east";
-         
-        // } 
+        }
+
+         //East scenario
+         if (deviceAngle>45 && deviceAngle<135 ){
+          channel="east"
+
+        } 
         
-        // //West scenario
-        // if (315>angle>225 ){
-        //   document.getElementById("west").innerHTML = "west";
-         
-        // }
+        //West scenario
+        if (deviceAngle>225 && deviceAngle<315){
+          channel="west"
 
-        // //South scenario
-        // if (225>angle>135){
-        //   document.getElementById("south").innerHTML = "south";
-        
-        // }
+        }
+
+        //South scenario
+        if (deviceAngle>135 && deviceAngle<225){
+          channel="south"
+
+        }
 
         var input_element = document.getElementById("chat-input");
         var message = input_element.value;
         if (message.length> 0 ){
         pubnubDemo.publish({
-        message: {message},
-        channel: "demo_tutorial",
+        message: `${channel} ":"  ${message}`,
+        channel: {channel},
       });
     }
       input_element.value =null;
-
+      
       }
       function givePermission() {
         // feature detect
