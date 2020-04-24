@@ -16,7 +16,7 @@
       onclick="givePermission();"
     />
     <p id="heading">n/a</p>
-    <p id="absolutenorth">n/a</p>
+    <p id="direction">n/a</p>
     <div id="chat-container"></div>
     <input type="text" id="chat-input" placeholder="  Your message.."></input>
     <button class="chat-button" onclick="getInput()">Send</button>
@@ -103,10 +103,27 @@
           heading = event.webkitCompassHeading;
         }
 
-        if(event.absolute === true){
-          document.getElementById("absolutenorth").innerHTML = "absolute north"
+          //North scenario
+        if (361>heading.toFixed([0])>315 || 45>heading.toFixed([0])>0 ){
+          document.getElementById("direction").innerHTML = "North"
 
         }
+         //East scenario
+         if (135>heading.toFixed([0])>45 ){
+          document.getElementById("direction").innerHTML = "East"
+
+        } //West scenario
+        if (315>heading.toFixed([0])>225 ){
+          document.getElementById("direction").innerHTML = "West"
+
+        }
+
+        //South scenario
+        if (225>heading.toFixed([0])>135 ){
+          document.getElementById("direction").innerHTML = "South"
+
+        }
+      
 
         document.getElementById("heading").innerHTML = heading.toFixed([0]);
       }
