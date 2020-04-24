@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
-    <h3>test9</h3>
+    <h3>test10</h3>
     <input
       type="button"
       value="Ok to see orientation"
@@ -31,6 +31,7 @@
       });
       console.log("pubnub", pubnubDemo);
 
+      var deviceAngle
       // Publish a simple message to the “demo_tutorial” channel pubnub:
     //   pubnubDemo.publish({
     //     message: { color: "blue" },
@@ -69,6 +70,14 @@
       });
 
       function getInput(){
+        if (deviceAngle > 180){
+          window.alert("deviceAngle > 180")
+        } else if (deviceAngle < 180){
+          window.alert("deviceAngle < 180")
+
+        }
+
+
         var input_element = document.getElementById("chat-input");
         var message = input_element.value;
         if (message.length> 0 ){
@@ -102,46 +111,40 @@
 
       function handleOrientation(event) {
         var heading = event.alpha;
-
-        var angle = heading.toFixed([0])
-          
-        
-
+        deviceAngle = heading
         if (typeof event.webkitCompassHeading !== "undefined") {
           heading = event.webkitCompassHeading;
         }
 
-          //North scenario
-        if ((360>angle>315)){
-          document.getElementById("north").innerHTML = "north";
+        //   //North scenario
+        // if ((360>angle>315)){
+        //   document.getElementById("north").innerHTML = "north";
           
-        }
+        // }
 
-          //North scenario
-        if (45>angle>0) {
-          document.getElementById("north").innerHTML = "north";
+        //   //North scenario
+        // if (45>angle>0) {
+        //   document.getElementById("north").innerHTML = "north";
           
-        }
+        // }
 
-         //East scenario
-         if (135>angle>45 ){
-          document.getElementById("east").innerHTML = "east";
+        //  //East scenario
+        //  if (135>angle>45 ){
+        //   document.getElementById("east").innerHTML = "east";
          
-        } 
+        // } 
         
-        //West scenario
-        if (315>angle>225 ){
-          document.getElementById("west").innerHTML = "west";
+        // //West scenario
+        // if (315>angle>225 ){
+        //   document.getElementById("west").innerHTML = "west";
          
-        }
+        // }
 
-        //South scenario
-        if (225>angle>135){
-          document.getElementById("south").innerHTML = "south";
-  
-        }
-    
-
+        // //South scenario
+        // if (225>angle>135){
+        //   document.getElementById("south").innerHTML = "south";
+        
+        // }
         document.getElementById("heading").innerHTML = heading.toFixed([0]);
       }
     </script>
