@@ -10,7 +10,7 @@
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
-    <h3>test14</h3>
+    <h3>test15</h3>
     <input
       type="button"
       value="Ok to see orientation"
@@ -52,61 +52,58 @@
         node.appendChild(textnode);
         document.getElementById("chat-container").appendChild(node); 
 
-        //   var newMessage = document.createTextNode({sentMessage}); 
-            // console.log("newMessage",newMessage)
-
-          
-        //   chat_container.appendChild(newMessage);
-            // chat_container.innerHTML += sentMessage;
-
         },
       });
 
-      pubnubDemo.subscribe({
-        channels: ["north"],
-      });
-
-      function getInput(){
-        deviceAngle= 44;
-        var channel = ""
-       //North scenario 1
+      function getDirection (deviceAngle){
+        //North scenario 1
         if (deviceAngle>315 ){
-          channel="north"
+          return "north"
         }
 
           //North scenario 2
         if (deviceAngle<45) {
-          channel="north"
+          return "north"
 
         }
 
          //East scenario
          if (deviceAngle>45 && deviceAngle<135 ){
-          channel="east"
+          return "east"
 
         } 
         
         //West scenario
         if (deviceAngle>225 && deviceAngle<315){
-          channel="west"
+          return "west"
 
         }
 
         //South scenario
         if (deviceAngle>135 && deviceAngle<225){
-          channel="south"
+          return "south"
 
         }
+      }
+      pubnubDemo.subscribe({
+        channels: [getDirection(deviceAngle)],
+      });
+
+      function getInput(){
+        // deviceAngle= 44;
+        var channel = ""
+        channel = getDirection(deviceAngle)
 
         var input_element = document.getElementById("chat-input");
         var message = input_element.value;
         if (message.length> 0 ){
         pubnubDemo.publish({
-        message: `${channel} ":"  ${message}`,
-        channel: {channel},
+        message: {message},
+        channel: channel,
       });
+      document.getElementById("chat-input").value=null; //clears the text in input field.
+
     }
-      input_element.value =null;
       
       }
       function givePermission() {
