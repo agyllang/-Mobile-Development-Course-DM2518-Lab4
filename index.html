@@ -7,19 +7,24 @@
     <!-- <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.js"></script> -->
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.27.4.min.js"></script>
     <link rel="stylesheet" href="index.css" />
+ 
+
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
-    <h3>test16</h3>
+    <h4>This is a direction based message application</h4>
     <input
       type="button"
-      value="Ok to see orientation"
+      id="ok-button"
+      value="Enable device orientation"
       onclick="givePermission();"
     />
-    <input id="input-angle" />
-    <button onclick="changeAngle()">change angle</button>
-
-    <p id="heading">n/a</p>
+    <!-- <input id="input-angle" />
+    <button onclick="changeAngle()">change angle</button> -->
+    <div class="compass">
+      <img class="compass-icon" src="compass-icon.png"/>
+      <p id="heading">Phone direction</p>
+    </div>
     <h4 id="direction-header">Channel</h4>
     <div id="chat-container"></div>
     <input type="text" id="chat-input" placeholder="  Your message.."></input>
@@ -96,7 +101,7 @@
           var channelName =fetchData.message.channel;
 
           addToChannelArray(fetchData)
-          createMessage(matchDirectionWithArray(getDirection(deviceAngle)));
+          // createMessage(matchDirectionWithArray(getDirection(deviceAngle)));
 
 
         // var chat_container = document.getElementById('chat-container');
