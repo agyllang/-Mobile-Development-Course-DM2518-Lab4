@@ -13,17 +13,34 @@
   </head>
   <body>
     <h1>DM2518Lab 4</h1>
-    <h4>This is a direction based message application</h4>
-    <input
+    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      More info
+    </button>
+    <button type="button" id="ok-button" class="btn btn-success" onclick="givePermission();"
+    >Enable device orientation</button>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body" style="width:70vw;">
+        This is a direction based message application. 
+        It uses your phones magnetometer to detect your cardinal direction.
+        You both send and read messages depending on the direction on your phone.
+        Enable device orientation to get started.
+        
+      </div>
+    </div>
+    
+
+    <!-- <input
+
       type="button"
       id="ok-button"
       value="Enable device orientation"
       onclick="givePermission();"
-    />
+    /> -->
+    <!-- For computer device testing -->
     <!-- <input id="input-angle" />
     <button onclick="changeAngle()">change angle</button> -->
     <div class="compass">
-      <h4>Phone direction<span id="badge-angle" class="badge badge-secondary heading"> X °</span></h4>
+      <h4>Phone direction<span id="badge-angle" class="badge badge-secondary"> X °</span></h4>
 
       <!-- <img class="compass-icon" src="compass-icon.png"/>
       <p id="heading">Phone direction</p> -->
@@ -31,7 +48,7 @@
     <h4 id="direction-header">Channel</h4>
     <div id="chat-container"></div>
     <input type="text" id="chat-input" placeholder="  Your message.."></input>
-    <button class="chat-button" onclick="sendInput()">Send</button>
+    <button class="btn btn-primary btn-sm" onclick="sendInput()">Send</button>
     
     
     <script>
@@ -200,14 +217,16 @@
               }
             })
             .catch(console.error);
-            document.getElementById("badge-angle").classList("badge badge-primary heading")
-
+            document.getElementById("badge-angle").className = "badge badge-primary";
+            document.getElementById("ok-button").className = "btn btn-secondary";
+            document.getElementById("ok-button").setAttribute("disabled");
 
         } else {
           // handle regular non iOS 13+ devices
           window.addEventListener("deviceorientation", handleOrientation, true);
-          document.getElementById("badge-angle").classList("badge badge-primary heading")
-
+          document.getElementById("badge-angle").className = "badge badge-primary";
+          document.getElementById("ok-button").className = "btn btn-secondary";
+          document.getElementById("ok-button").setAttribute("disabled");
         }
       }
 
@@ -222,7 +241,7 @@
         createMessage(matchDirectionWithArray(getDirection(deviceAngle)));
 
        
-        document.getElementById("heading").innerHTML = heading.toFixed([0]) + "°";
+        document.getElementById("badge-angle").innerHTML = heading.toFixed([0]) + "°";
       }
     </script>
 

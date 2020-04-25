@@ -1,5 +1,5 @@
 body {
-  background: linear-gradient(266deg, #6c99b7, #b47cd4, #66e380);
+  background: linear-gradient(266deg, #3578cf, #6c99b7, #66e380);
   background-size: 600% 600%;
 
   -webkit-animation: AnimationName 19s ease infinite;
@@ -64,59 +64,8 @@ body {
   float: left;
 }
 
-#ok-button {
-  outline: none;
-  box-shadow: 0px 10px 14px -7px #caefab;
-  background: linear-gradient(to bottom, #66de6e 5%, #519137 100%);
-  background-color: #66de6e;
-  border-radius: 4px;
-  border: 1px solid #268a16;
-  display: inline-block;
-  cursor: pointer;
-  color: white;
-  font-family: Arial;
-  font-size: 13px;
-  /* font-weight: bold; */
-  padding: 6px 12px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #aade7c;
-}
-#ok-button:hover {
-  background: linear-gradient(to bottom, #519137 5%, #66de6e 100%);
-  background-color: #519137;
-}
-#ok-button:active {
-  position: relative;
-  top: 1px;
-}
-
-.chat-button {
-  margin-top: 3px;
-  box-shadow: inset 0px -3px 7px 0px #29bbff;
-  background: linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
-  background-color: #2dabf9;
-  border-radius: 19px;
-  border: 1px solid #0b0e07;
-  display: inline-block;
-  cursor: pointer;
-  color: #ffffff;
-  font-family: Arial;
-  font-size: 15px;
-  padding: 3px 7px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #263666;
-}
-.chat-button:hover {
-  background: linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
-  background-color: #0688fa;
-}
-.chat-button:active {
-  position: relative;
-  top: 1px;
-}
-
 .compass {
-  background: rgba(80, 204, 190, 0.3);
+  /* background: rgba(80, 204, 190, 0.3); */
   width: 20vw;
   /* border: 2px solid black; */
   display: grid;
